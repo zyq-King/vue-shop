@@ -1,9 +1,9 @@
 import Vue from 'vue'
-import { Button } from 'element-ui'
-import { Form,FormItem } from 'element-ui'
-import{ input } from 'element-ui'
+import { Button, Form, FormItem, Input, Message } from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Form)
 Vue.use(FormItem)
-Vue.use(input)
+Vue.use(Input)
+// 将message全局挂载到vue上成为一个属性，可$message全局使用
+Vue.prototype.$message = Message
