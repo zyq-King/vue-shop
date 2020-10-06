@@ -3,8 +3,12 @@
     <div class="login_box">
       <!-- 头像区 -->
       <div class="avatar_box">
-        <img src="../assets/logo.png" alt="" srcset="" />
+        <!-- <span></span>
+        <span></span>
+        <span></span>
+        <span></span> -->
       </div>
+      <img src="../assets/logo.png" alt="" srcset="" />
       <!-- 登录表单区 -->
       <!-- ref获取到表单的引用对象  this.$refs.loginFormRef进行使用 -->
       <el-form
@@ -101,7 +105,7 @@ export default {
 
 <style lang="less" scoped>
 .login_container {
-  background-color: #2b4b6b;
+  background-image: linear-gradient(to right,#43cea2,#185a9d);
   height: 100%;
 }
 .login_box {
@@ -113,24 +117,57 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  // span{
+  //   position: absolute;
+  //   width: 130px;
+  //   height: 130px;
+  //   background: linear-gradient(#14ffe9,#ffeb3b,#ff00e0);
+  //   border-radius: 50%;
+  // }
+  // span:nth-child(1){
+  //   fill: blur(5px);
+  // }
+  // span:nth-child(2){
+  //   fill: blur(10px);
+  // }
+  // span:nth-child(3){
+  //   fill: blur(15px);
+  // }
+  // span:nth-child(4){
+  //   fill: blur(20px);
+  // }
+  img {
+      height: 130px;
+      width: 130px;
+      border-radius: 50%;
+      background-color: #eeeeee;
+      transform: translate(121%, -50%);
+      border: 1px solid #eeeeee;
+      box-shadow: 0 0 10px #dddddd;
+    }
   .avatar_box {
+     
     height: 130px;
     width: 130px;
-    border: 1px solid #eeeeee;
+    // border: 1px solid #eeeeee;
     border-radius: 50%;
     padding: 10px;
     // 加阴影
-    box-shadow: 0 0 10px #dddddd;
+    // box-shadow: 0 0 10px #dddddd;
+    background: linear-gradient(#14ffe9,#ffeb3b,#ff00e0);
+    animation: rotate 1.5s linear infinite;
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
-    img {
-      height: 100%;
-      width: 100%;
-      border-radius: 50%;
-      background-color: #eeeeee;
-    }
+  }
+}
+@keyframes rotate{
+  0%{
+    filter: hue-rotate(0deg);
+  }
+  100%{
+    filter: hue-rotate(360deg);
   }
 }
 .login_form {
