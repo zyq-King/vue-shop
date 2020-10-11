@@ -10,32 +10,42 @@
     <el-container>
       <!-- 侧边栏 -->
       <el-aside width="200px">
+        <div class="toggle-button" @click="toggleCollapse">|||</div>
         <!-- 侧边栏菜单区域 -->
         <el-menu
           background-color="#333744"
           text-color="#fff"
-          active-text-color="#ffd04b"
+          active-text-color="#409BFF"
+          unique-opened
+          :collapse="iscollapse"
         >
-        <!-- 一级菜单 -->
-          <el-submenu index="1">
+          <!-- 一级菜单 双层循环-->
+          <el-submenu
+            :index="item.id + ''"
+            v-for="item in menulist"
+            :key="item.id"
+          >
             <!-- 一级菜单的模板区 -->
             <template slot="title">
               <!-- 图标 -->
-              <i class="el-icon-location"></i>
+              <i :class="iconObj[item.id]"></i>
               <!-- 文本 -->
-              <span>导航一</span>
+              <span>{{ item.authName }}</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item index="1-1">
+            <el-menu-item
+              :index="subItem.id + ''"
+              v-for="subItem in item.children"
+              :key="subItem.id"
+            >
               <template slot="title">
-              <!-- 图标 -->
-              <i class="el-icon-location"></i>
-              <!-- 文本 -->
-              <span>导航一</span>
-            </template>
+                <!-- 图标 -->
+                <i class="el-icon-menu"></i>
+                <!-- 文本 -->
+                <span>{{ subItem.authName }}</span>
+              </template>
             </el-menu-item>
           </el-submenu>
-         
         </el-menu>
       </el-aside>
       <!-- 右侧内容主体 -->
@@ -46,13 +56,23 @@
 
 <script>
 export default {
-  data(){
+  data() {
     return {
-      menulist: []
-    }
+      // 左侧菜单数据
+      menulist: [],
+      iconObj: {
+        125: "iconfont icon-user",
+        103: "iconfont icon-tijikongjian",
+        101: "iconfont icon-shangpin",
+        102: "iconfont icon-danju",
+        145: "iconfont icon-baobiao",
+      },
+      // 是否折叠
+      iscollapse:false
+    };
   },
-  created(){
-    this.getMenuList()
+  created() {
+    this.getMenuList();
   },
   methods: {
     loginout() {
@@ -60,11 +80,15 @@ export default {
       this.$router.push("/login");
     },
     // 获取所有的菜单
-    async getMenuList(){
-      const {data:res} = await this.$http.get('menus')
-      if(res.meta.status !== 200) return this.$message.error(res.meta.msg)
-      this.menulist = res.data
-      console.log(res)
+    async getMenuList() {
+      const { data: res } = await this.$http.get("menus");
+      if (res.meta.status !== 200) return this.$message.error(res.meta.msg);
+      this.menulist = res.data;
+      console.log(res);
+    },
+    // 点击按钮，切换菜单的折叠与展开
+    toggleCollapse(){
+      this.iscollapse = !this.iscollapse 
     }
   },
 };
@@ -89,16 +113,33 @@ export default {
     display: flex;
     position: relative;
   }
-  >img{
+  > img {
     margin-left: 60px;
   }
 }
 
 .el-aside {
   background-color: #333744;
+  .el-menu {
+    border-right: none;
+  }
 }
 
 .el-main {
   background-color: #eaedf1;
+}
+.iconfont {
+  margin-right: 10px;
+  font-size: 20px;
+  // size: 50px;
+}
+.toggle-button{
+  background-color: #4A5064;
+  font-size: 10px;
+  line-height: 24px;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 0.2em;
+  cursor: pointer;
 }
 </style>>
